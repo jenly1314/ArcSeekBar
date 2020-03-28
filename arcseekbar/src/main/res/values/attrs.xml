@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ArcSeekBar">
+        <attr name="arcStrokeWidth" format="dimension"/>
+        <attr name="arcNormalColor" format="color"/>
+        <attr name="arcProgressColor" format="color"/>
+        <attr name="arcStartAngle" format="integer"/>
+        <attr name="arcSweepAngle" format="integer"/>
+        <attr name="arcMax" format="integer"/>
+        <attr name="arcProgress" format="integer"/>
+        <attr name="arcDuration" format="integer"/>
+        <attr name="arcLabelText" format="string"/>
+        <attr name="arcLabelTextColor" format="color"/>
+        <attr name="arcLabelTextSize" format="dimension"/>
+        <attr name="arcLabelPaddingTop" format="dimension"/>
+        <attr name="arcLabelPaddingBottom" format="dimension"/>
+        <attr name="arcLabelPaddingLeft" format="dimension"/>
+        <attr name="arcLabelPaddingRight" format="dimension"/>
+        <attr name="arcShowLabel" format="boolean"/>
+        <attr name="arcShowTick" format="boolean"/>
+        <attr name="arcTickStrokeWidth" format="dimension"/>
+        <attr name="arcTickPadding" format="dimension"/>
+        <attr name="arcTickSplitAngle" format="integer"/>
+        <attr name="arcBlockAngle" format="integer"/>
+        <attr name="arcThumbStrokeWidth" format="dimension"/>
+        <attr name="arcThumbColor" format="color"/>
+        <attr name="arcThumbRadius" format="dimension"/>
+        <attr name="arcThumbRadiusEnlarges" format="dimension"/>
+        <attr name="arcShowThumb" format="boolean"/>
+        <attr name="arcAllowableOffsets" format="dimension"/>
+        <attr name="arcEnabledDrag" format="boolean"/>
+
+    </declare-styleable>
+
+
+</resources>
