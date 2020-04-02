@@ -37,9 +37,9 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 | arcLabelTextColor | color |<font color=#333333>#FF333333</font>| 文本字体颜色 |
 | arcLabelTextSize | dimension |30sp| 文本字体大小 |
 | arcLabelPaddingTop | dimension |0dp| 文本居顶边内间距 |
-| arcLabelPaddingBottom | dimension |0dp| 文本居左边内间距 |
-| arcLabelPaddingLeft | dimension |0dp| 文本居右边内间距 |
-| arcLabelPaddingRight | dimension |0dp| 文本居底边内间距 |
+| arcLabelPaddingBottom | dimension |0dp| 文本居底边内间距 |
+| arcLabelPaddingLeft | dimension |0dp| 文本居左边内间距 |
+| arcLabelPaddingRight | dimension |0dp| 文本居右边内间距 |
 | arcShowLabel | boolean | true | 是否显示文本 |
 | arcShowTick | boolean | true | 是否显示环刻度 |
 | arcTickStrokeWidth | dimension |10dp| 刻度描边宽度 |
