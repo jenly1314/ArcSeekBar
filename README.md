@@ -26,8 +26,8 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 | 属性 | 值类型 | 默认值 | 说明 |
 | :------| :------ | :------ | :------ |
 | arcStrokeWidth | dimension |12dp| 画笔描边的宽度 |
-| arcNormalColor | color |<font color=#C8C8C8>#FFC8C8C8</font>| 弧形正常颜色 |
 | arcStrokeCap | enum | ROUND | 画笔的线冒样式 |
+| arcNormalColor | color |<font color=#C8C8C8>#FFC8C8C8</font>| 弧形正常颜色 |
 | arcProgressColor | color |<font color=#4FEAAC>#FF4FEAAC</font>| 弧形进度颜色 |
 | arcStartAngle | integer | 270 | 开始角度，默认十二点钟方向 |
 | arcSweepAngle | integer | 360 | 扫描角度范围 |
