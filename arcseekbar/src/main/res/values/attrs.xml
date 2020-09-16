@@ -3,6 +3,11 @@
 
     <declare-styleable name="ArcSeekBar">
         <attr name="arcStrokeWidth" format="dimension"/>
+        <attr name="arcStrokeCap" format="enum">
+            <enum name="BUTT" value="1"/>
+            <enum name="SQUARE" value="2"/>
+            <enum name="ROUND" value="3"/>
+        </attr>
         <attr name="arcNormalColor" format="color"/>
         <attr name="arcProgressColor" format="color"/>
         <attr name="arcStartAngle" format="integer"/>
@@ -30,6 +35,8 @@
         <attr name="arcShowThumb" format="boolean"/>
         <attr name="arcAllowableOffsets" format="dimension"/>
         <attr name="arcEnabledDrag" format="boolean"/>
+        <attr name="arcEnabledSingle" format="boolean"/>
+
 
     </declare-styleable>
 

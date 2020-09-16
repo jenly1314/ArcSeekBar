@@ -41,6 +41,11 @@ public class ArcSeekBar extends View {
     private float mStrokeWidth;
 
     /**
+     *
+     */
+    private Paint.Cap mStrokeCap = Paint.Cap.ROUND;
+
+    /**
      * 开始角度(默认从12点钟方向开始)
      */
     private int mStartAngle = 270;
@@ -211,9 +216,14 @@ public class ArcSeekBar extends View {
     private boolean isCanDrag = false;
 
     /**
-     * 是否启用拖拽
+     * 是否启用拖拽改变进度
      */
     private boolean isEnabledDrag = true;
+
+    /**
+     * 是否启用点击改变进度
+     */
+    private boolean isEnabledSingle = true;
 
     private OnChangeListener mOnChangeListener;
 
@@ -262,6 +272,8 @@ public class ArcSeekBar extends View {
             int attr = a.getIndex(i);
             if (attr == R.styleable.ArcSeekBar_arcStrokeWidth) {
                 mStrokeWidth = a.getDimension(attr,mStrokeWidth);
+            }else if(attr == R.styleable.ArcSeekBar_arcStrokeCap){
+                mStrokeCap = getStrokeCap(a.getInt(attr,3));
             }else if(attr == R.styleable.ArcSeekBar_arcNormalColor){
                 mNormalColor = a.getColor(attr,mNormalColor);
             }else if(attr == R.styleable.ArcSeekBar_arcProgressColor){
@@ -272,7 +284,10 @@ public class ArcSeekBar extends View {
             }else if(attr == R.styleable.ArcSeekBar_arcSweepAngle){
                 mSweepAngle = a.getInt(attr,mSweepAngle);
             }else if(attr == R.styleable.ArcSeekBar_arcMax){
-                mMax = a.getInt(attr,mMax);
+                int max = a.getInt(attr,mMax);
+                if(max > 0){
+                    mMax = max;
+                }
             }else if(attr == R.styleable.ArcSeekBar_arcProgress){
                 mProgress = a.getInt(attr,mProgress);
             }else if(attr == R.styleable.ArcSeekBar_arcDuration){
@@ -317,6 +332,8 @@ public class ArcSeekBar extends View {
                 mAllowableOffsets = a.getDimension(attr,mAllowableOffsets);
             }else if(attr == R.styleable.ArcSeekBar_arcEnabledDrag){
                 isEnabledDrag = a.getBoolean(attr,true);
+            }else if(attr == R.styleable.ArcSeekBar_arcEnabledSingle){
+                isEnabledSingle = a.getBoolean(attr,true);
             }
         }
 
@@ -335,6 +352,9 @@ public class ArcSeekBar extends View {
 
                 if(isInArc(event.getX(),event.getY())){
                     updateDragThumb(event.getX(),event.getY(),true);
+                    if(mOnChangeListener != null){
+                        mOnChangeListener.onSingleTapUp();
+                    }
                     return true;
                 }
 
@@ -342,6 +362,17 @@ public class ArcSeekBar extends View {
             }
         });
 
+    }
+
+    private Paint.Cap getStrokeCap(int value){
+        switch (value){
+            case 1:
+                return Paint.Cap.BUTT;
+            case 2:
+                return Paint.Cap.SQUARE;
+            default:
+                return Paint.Cap.ROUND;
+        }
     }
 
 
@@ -446,8 +477,7 @@ public class ArcSeekBar extends View {
 
         mPaint.setStrokeWidth(mStrokeWidth);
         mPaint.setShader(null);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-
+        mPaint.setStrokeCap(mStrokeCap);
 
         //进度圆半径
         float diameter = mRadius * 2;
@@ -468,8 +498,11 @@ public class ArcSeekBar extends View {
             mPaint.setColor(mProgressColor);
         }
 
-        //绘制当前进度弧形
-        canvas.drawArc(rectF1,mStartAngle,mSweepAngle * getRatio(),false,mPaint);
+        float ratio = getRatio();
+        if(ratio != 0){
+            //绘制当前进度弧形
+            canvas.drawArc(rectF1,mStartAngle,mSweepAngle * ratio,false,mPaint);
+        }
 
     }
 
@@ -524,6 +557,7 @@ public class ArcSeekBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         if(isEnabledDrag){
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
@@ -534,21 +568,24 @@ public class ArcSeekBar extends View {
                         updateDragThumb(event.getX(),event.getY(),false);
                     }
                     break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                    if(mOnChangeListener != null){
+                        mOnChangeListener.onStopTrackingTouch(isCanDrag);
+                    }
+                    isCanDrag = false;
+                    invalidate();
+                    break;
 
             }
-            mDetector.onTouchEvent(event);
-            if(event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL){
-                getParent().requestDisallowInterceptTouchEvent(false);
-                if(mOnChangeListener != null){
-                    mOnChangeListener.onStopTrackingTouch(isCanDrag);
-                }
-                isCanDrag = false;
-                invalidate();
-            }
-            return true;
         }
 
-        return super.onTouchEvent(event);
+        if(isEnabledSingle){
+            mDetector.onTouchEvent(event);
+        }
+
+        return isEnabledSingle || isEnabledDrag || super.onTouchEvent(event);
     }
 
     /**
@@ -595,11 +632,17 @@ public class ArcSeekBar extends View {
      */
     private void updateDragThumb(float x,float y,boolean isSingle){
         int progress = getProgressForAngle(getTouchDegrees(x,y));
-
         if(!isSingle){
             int tempProgressPercent = (int)(progress * 100.0f / mMax);
+            //当滑动至至边界值时，增加进度校准机制
+            if(mProgressPercent < 10 && tempProgressPercent > 90){
+                progress = 0;
+            }else if(mProgressPercent > 90 && tempProgressPercent < 10){
+                progress = mMax;
+            }
+            int progressPercent = (int)(progress * 100.0f / mMax);
             //拖动进度突变不允许超过30%
-            if(Math.abs(tempProgressPercent - mProgressPercent) > 30){
+            if(Math.abs(progressPercent - mProgressPercent) > 30){
                 return;
             }
         }
@@ -725,8 +768,10 @@ public class ArcSeekBar extends View {
      * @param max
      */
     public void setMax(int max){
-        this.mMax = max;
-        invalidate();
+        if(max > 0){
+            this.mMax = max;
+            invalidate();
+        }
     }
 
     /**
@@ -738,17 +783,17 @@ public class ArcSeekBar extends View {
     }
 
     private void setProgress(int progress,boolean fromUser){
-        if(progress >= 0){
-            if(progress > mMax){
-                progress = mMax;
-            }
-            this.mProgress = progress;
-            mProgressPercent = (int)(mProgress * 100.0f / mMax);
-            invalidate();
+        if(progress < 0){
+            progress = 0;
+        }else if(progress > mMax){
+            progress = mMax;
+        }
+        this.mProgress = progress;
+        mProgressPercent = (int)(mProgress * 100.0f / mMax);
+        invalidate();
 
-            if(mOnChangeListener!=null){
-                mOnChangeListener.onProgressChanged(mProgress,mMax,fromUser);
-            }
+        if(mOnChangeListener!=null){
+            mOnChangeListener.onProgressChanged(mProgress,mMax,fromUser);
         }
     }
 
@@ -976,10 +1021,13 @@ public class ArcSeekBar extends View {
         this.mOnChangeListener = onChangeListener;
     }
 
+
+
     public interface OnChangeListener{
         void onStartTrackingTouch(boolean isCanDrag);
         void onProgressChanged(float progress, float max, boolean fromUser);
         void onStopTrackingTouch(boolean isCanDrag);
+        void onSingleTapUp();
     }
 
     public abstract class OnSimpleChangeListener implements OnChangeListener{
@@ -990,6 +1038,11 @@ public class ArcSeekBar extends View {
 
         @Override
         public void onStopTrackingTouch(boolean isCanDrag) {
+
+        }
+
+        @Override
+        public void onSingleTapUp() {
 
         }
     }
