@@ -1,7 +1,7 @@
 # ArcSeekBar
 
 [![Download](https://img.shields.io/badge/download-App-blue.svg)](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk)
-[![JCenter](https://img.shields.io/badge/JCenter-1.0.0-46C018.svg)](https://bintray.com/beta/#/jenly/maven/arcseekbar)
+[![JCenter](https://img.shields.io/badge/JCenter-1.0.1-46C018.svg)](https://bintray.com/beta/#/jenly/maven/arcseekbar)
 [![JitPack](https://jitpack.io/v/jenly1314/ArcSeekBar.svg)](https://jitpack.io/#jenly1314/ArcSeekBar)
 [![CI](https://travis-ci.org/jenly1314/ArcSeekBar.svg?branch=master)](https://travis-ci.org/jenly1314/ArcSeekBar)
 [![CircleCI](https://circleci.com/gh/jenly1314/ArcSeekBar.svg?style=svg)](https://circleci.com/gh/jenly1314/ArcSeekBar)
@@ -25,8 +25,9 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 ## ArcSeekBar自定义属性说明（进度默认渐变色）
 | 属性 | 值类型 | 默认值 | 说明 |
 | :------| :------ | :------ | :------ |
-| arcStrokeWidth | dimension |12dp| 笔画描边的宽度 |
+| arcStrokeWidth | dimension |12dp| 画笔描边的宽度 |
 | arcNormalColor | color |<font color=#C8C8C8>#FFC8C8C8</font>| 弧形正常颜色 |
+| arcStrokeCap | enum | ROUND | 画笔的线冒样式 |
 | arcProgressColor | color |<font color=#4FEAAC>#FF4FEAAC</font>| 弧形进度颜色 |
 | arcStartAngle | integer | 270 | 开始角度，默认十二点钟方向 |
 | arcSweepAngle | integer | 360 | 扫描角度范围 |
@@ -52,7 +53,8 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 | arcThumbRadiusEnlarges | dimension |8dp| 触摸时按钮半径放大量 |
 | arcShowThumb | boolean | true | 是否显示拖动按钮 |
 | arcAllowableOffsets | dimension |10dp| 触摸时可偏移距离：偏移量越大，触摸精度越小 |
-| arcEnabledDrag | boolean | true | 是否启动拖动，如果为false，相当于**ProgressBar**的功能 |
+| arcEnabledDrag | boolean | true | 是否启用通过拖动改变进度 |
+| arcEnabledSingle | boolean | true | 是否启用通过点击改变进度 |
 
 ## 引入
 
@@ -61,18 +63,18 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 <dependency>
   <groupId>com.king.view</groupId>
   <artifactId>arcseekbar</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
 ### Gradle:
 ```gradle
-implementation 'com.king.view:arcseekbar:1.0.0'
+implementation 'com.king.view:arcseekbar:1.0.1'
 ```
 
 ### Lvy:
 ```lvy
-<dependency org='com.king.view' name='arcseekbar' rev='1.0.0'>
+<dependency org='com.king.view' name='arcseekbar' rev='1.0.1'>
   <artifact name='$AID' ext='pom'></artifact>
 </dependency>
 ```
@@ -111,6 +113,9 @@ allprojects {
 
 ## 版本记录
 
+#### v1.0.1：2020-9-16
+*  优化细节
+
 #### v1.0.0：2020-3-28
 *  ArcSeekBar初始版本
 
@@ -133,7 +138,9 @@ allprojects {
 
    CNBlogs: <a title="博客园" href="https://www.cnblogs.com/jenly" target="_blank">jenly</a>
 
-   Github: <a title="Github开源项目" href="https://github.com/jenly1314" target="_blank">jenly1314</a>
+   GitHub: <a title="GitHub开源项目" href="https://github.com/jenly1314" target="_blank">jenly1314</a>
+
+   Gitee: <a title="Gitee开源项目" href="https://gitee.com/jenly1314" target="_blank">jenly1314</a>
 
    加入QQ群: <a title="点击加入QQ群" href="http://shang.qq.com/wpa/qunwpa?idkey=8fcc6a2f88552ea44b1411582c94fd124f7bb3ec227e2a400dbbfaad3dc2f5ad" target="_blank">20867961</a>
    <div>
