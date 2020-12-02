@@ -225,6 +225,8 @@ public class ArcSeekBar extends View {
      */
     private boolean isEnabledSingle = true;
 
+    private boolean isMeasureCircle = false;
+
     private OnChangeListener mOnChangeListener;
 
 
@@ -399,6 +401,7 @@ public class ArcSeekBar extends View {
 
         //默认着色器
         mShader = new SweepGradient(mCircleCenterX,mCircleCenterX,mShaderColors,null);
+        isMeasureCircle = true;
 
         setMeasuredDimension(width,height);
 
@@ -822,8 +825,13 @@ public class ArcSeekBar extends View {
      * @param colors
      */
     public void setProgressColor(int... colors){
-        Shader shader = new SweepGradient(mCircleCenterX,mCircleCenterX,colors,null);
-        setShader(shader);
+        if(isMeasureCircle){
+            Shader shader = new SweepGradient(mCircleCenterX,mCircleCenterX,colors,null);
+            setShader(shader);
+        }else{
+            mShaderColors = colors;
+            isShader = true;
+        }
     }
 
     /**

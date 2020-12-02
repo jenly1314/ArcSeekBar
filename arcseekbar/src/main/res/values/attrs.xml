@@ -37,7 +37,6 @@
         <attr name="arcEnabledDrag" format="boolean"/>
         <attr name="arcEnabledSingle" format="boolean"/>
 
-
     </declare-styleable>
 
 

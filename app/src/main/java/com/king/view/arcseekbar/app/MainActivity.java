@@ -1,7 +1,9 @@
 package com.king.view.arcseekbar.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         arcSeekBar1 = findViewById(R.id.arcSeekBar1);
         arcSeekBar2 = findViewById(R.id.arcSeekBar2);
         cb = findViewById(R.id.cb);
+
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -32,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 arcSeekBar2.setShowTick(isChecked);
             }
         });
-
     }
+
 
     public void onClick(View v){
         switch (v.getId()){

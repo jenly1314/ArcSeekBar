@@ -1,7 +1,7 @@
 # ArcSeekBar
 
 [![Download](https://img.shields.io/badge/download-App-blue.svg)](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk)
-[![JCenter](https://img.shields.io/badge/JCenter-1.0.1-46C018.svg)](https://bintray.com/beta/#/jenly/maven/arcseekbar)
+[![JCenter](https://img.shields.io/badge/JCenter-1.0.2-46C018.svg)](https://bintray.com/beta/#/jenly/maven/arcseekbar)
 [![JitPack](https://jitpack.io/v/jenly1314/ArcSeekBar.svg)](https://jitpack.io/#jenly1314/ArcSeekBar)
 [![CI](https://travis-ci.org/jenly1314/ArcSeekBar.svg?branch=master)](https://travis-ci.org/jenly1314/ArcSeekBar)
 [![CircleCI](https://circleci.com/gh/jenly1314/ArcSeekBar.svg?style=svg)](https://circleci.com/gh/jenly1314/ArcSeekBar)
@@ -63,18 +63,18 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 <dependency>
   <groupId>com.king.view</groupId>
   <artifactId>arcseekbar</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
 ### Gradle:
 ```gradle
-implementation 'com.king.view:arcseekbar:1.0.1'
+implementation 'com.king.view:arcseekbar:1.0.2'
 ```
 
 ### Lvy:
 ```lvy
-<dependency org='com.king.view' name='arcseekbar' rev='1.0.1'>
+<dependency org='com.king.view' name='arcseekbar' rev='1.0.2'>
   <artifact name='$AID' ext='pom'></artifact>
 </dependency>
 ```
@@ -112,6 +112,9 @@ allprojects {
 更多使用详情，请查看[app](app)中的源码使用示例
 
 ## 版本记录
+
+#### v1.0.2：2020-12-2
+*  优化设置渐变色过程处理
 
 #### v1.0.1：2020-9-16
 *  优化细节
