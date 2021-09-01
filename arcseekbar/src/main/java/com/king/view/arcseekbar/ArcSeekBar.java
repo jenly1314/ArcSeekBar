@@ -108,6 +108,11 @@ public class ArcSeekBar extends View {
     private float mBlockAngle = 1;
 
     /**
+     * 刻度偏移的角度大小
+     */
+    private float mTickOffsetAngle = 0;
+
+    /**
      * 总刻度数
      */
     private int mTotalTickCount;
@@ -320,6 +325,8 @@ public class ArcSeekBar extends View {
                 mTickSplitAngle = a.getInt(attr,5);
             }else if(attr == R.styleable.ArcSeekBar_arcBlockAngle){
                 mBlockAngle = a.getInt(attr,1);
+            }else if(attr == R.styleable.ArcSeekBar_arcTickOffsetAngle){
+                mTickOffsetAngle = a.getInt(attr,0);
             }else if(attr == R.styleable.ArcSeekBar_arcThumbStrokeWidth){
                 mThumbStrokeWidth = a.getDimension(attr,mThumbStrokeWidth);
             }else if(attr == R.styleable.ArcSeekBar_arcThumbColor){
@@ -464,14 +471,14 @@ public class ArcSeekBar extends View {
                         mPaint.setColor(mProgressColor);
                     }
                     //绘制刻度
-                    canvas.drawArc(rectF, i * (mBlockAngle + mTickSplitAngle) + mStartAngle, mBlockAngle, false, mPaint);
+                    canvas.drawArc(rectF, i * (mBlockAngle + mTickSplitAngle) + mStartAngle + mTickOffsetAngle, mBlockAngle, false, mPaint);
                 } else {
                     if(mNormalColor != 0){
                         //未选中的刻度
                         mPaint.setShader(null);
                         mPaint.setColor(mNormalColor);
                         //绘制刻度
-                        canvas.drawArc(rectF, i * (mBlockAngle + mTickSplitAngle) + mStartAngle, mBlockAngle, false, mPaint);
+                        canvas.drawArc(rectF, i * (mBlockAngle + mTickSplitAngle) + mStartAngle + mTickOffsetAngle, mBlockAngle, false, mPaint);
                     }
                 }
             }
@@ -545,9 +552,9 @@ public class ArcSeekBar extends View {
         mTextPaint.setTextAlign(Paint.Align.CENTER);
 
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-        // 计算文字高度 
+        // 计算文字高度
         float fontHeight = fontMetrics.bottom - fontMetrics.top;
-        // 计算文字baseline 
+        // 计算文字baseline
         float textBaseX = getWidth() / 2 + mLabelPaddingLeft - mLabelPaddingRight;
         float textBaseY = getHeight() - (getHeight() - fontHeight) / 2 - fontMetrics.bottom + mLabelPaddingTop - mLabelPaddingBottom;
         if(isShowPercentText){//是否显示百分比
@@ -906,13 +913,59 @@ public class ArcSeekBar extends View {
         return mThumbCenterY;
     }
 
-
     public float getAllowableOffsets() {
         return mAllowableOffsets;
     }
 
     public boolean isEnabledDrag() {
         return isEnabledDrag;
+    }
+
+    public boolean isEnabledSingle() {
+        return isEnabledSingle;
+    }
+
+    public boolean isShowPercentText() {
+        return isShowPercentText;
+    }
+
+    public boolean isShowTick() {
+        return isShowTick;
+    }
+
+    public boolean isShowThumb() {
+        return isShowThumb;
+    }
+
+
+    public float getThumbRadiusEnlarges() {
+        return mThumbRadiusEnlarges;
+    }
+
+    /**
+     * 触摸时按钮半径放大量
+     * @param thumbRadiusEnlarges
+     */
+    public void setThumbRadiusEnlarges(float thumbRadiusEnlarges) {
+        this.mThumbRadiusEnlarges = thumbRadiusEnlarges;
+    }
+
+    /**
+     * 是否默认显示百分比为标签文字
+     * @param showPercentText
+     */
+    public void setShowPercentText(boolean showPercentText) {
+        isShowPercentText = showPercentText;
+        invalidate();
+    }
+
+    /**
+     * 是否显示拖动按钮
+     * @param showThumb
+     */
+    public void setShowThumb(boolean showThumb) {
+        isShowThumb = showThumb;
+        invalidate();
     }
 
     /**
@@ -925,10 +978,19 @@ public class ArcSeekBar extends View {
 
     /**
      * 是否启用拖拽
-     * @param enabledDrag 默认为true，为false时 相当于{@link android.widget.ProgressBar}
+     * @param enabledDrag 默认为 true，为 false 时 相当于{@link android.widget.ProgressBar}
      */
     public void setEnabledDrag(boolean enabledDrag) {
         isEnabledDrag = enabledDrag;
+    }
+
+
+    /**
+     * 设置是否启用点击改变进度
+     * @param enabledSingle
+     */
+    public void setEnabledSingle(boolean enabledSingle){
+        isEnabledSingle = enabledSingle;
     }
 
     /**
@@ -1032,9 +1094,27 @@ public class ArcSeekBar extends View {
 
 
     public interface OnChangeListener{
+        /**
+         * 跟踪触摸事件开始时回调此方法 {@link MotionEvent#ACTION_DOWN}
+         * @param isCanDrag
+         */
         void onStartTrackingTouch(boolean isCanDrag);
+
+        /**
+         * 进度改变时回调此方法
+         * @param progress
+         * @param max
+         * @param fromUser
+         */
         void onProgressChanged(float progress, float max, boolean fromUser);
+        /**
+         * 跟踪触摸事件停止时回调此方法 {@link MotionEvent#ACTION_UP}
+         */
         void onStopTrackingTouch(boolean isCanDrag);
+
+        /**
+         * 通过点击事件改变进度后回调此方法 {@link GestureDetector#GestureDetector#onSingleTapUp()}
+         */
         void onSingleTapUp();
     }
 

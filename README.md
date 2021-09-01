@@ -2,6 +2,7 @@
 
 [![Download](https://img.shields.io/badge/download-App-blue.svg)](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk)
 [![JCenter](https://img.shields.io/badge/JCenter-1.0.2-46C018.svg)](https://bintray.com/beta/#/jenly/maven/arcseekbar)
+[![MavenCentral](https://img.shields.io/maven-central/v/com.github.jenly1314/arcseekbar)](https://repo1.maven.org/maven2/com/github/jenly1314/arcseekbar)
 [![JitPack](https://jitpack.io/v/jenly1314/ArcSeekBar.svg)](https://jitpack.io/#jenly1314/ArcSeekBar)
 [![CI](https://travis-ci.org/jenly1314/ArcSeekBar.svg?branch=master)](https://travis-ci.org/jenly1314/ArcSeekBar)
 [![CircleCI](https://circleci.com/gh/jenly1314/ArcSeekBar.svg?style=svg)](https://circleci.com/gh/jenly1314/ArcSeekBar)
@@ -47,6 +48,7 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 | arcTickPadding | dimension | 2dp | 环刻度与环间距 |
 | arcTickSplitAngle | integer | 5 | 刻度间隔的角度大小 |
 | arcBlockAngle | integer | 1 | 刻度的角度大小 |
+| arcTickOffsetAngle | integer | 0 | 刻度偏移的角度大小 |
 | arcThumbStrokeWidth | dimension |8dp| 拖动按钮描边宽度 |
 | arcThumbColor | color |<font color=#E8D30F>#FFE8D30F</font>| 拖动按钮颜色 |
 | arcThumbRadius | dimension |10dp| 拖动按钮半径 |
@@ -58,35 +60,31 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 ## 引入
 
-### Maven：
-```maven
-<dependency>
-  <groupId>com.king.view</groupId>
-  <artifactId>arcseekbar</artifactId>
-  <version>1.0.2</version>
-  <type>pom</type>
-</dependency>
-```
 ### Gradle:
+
+1. 在Project的 **build.gradle** 里面添加远程仓库  
+          
+```gradle
+allprojects {
+    repositories {
+        //...
+        mavenCentral()
+    }
+}
+```
+
+2. 在Module的 **build.gradle** 里面添加引入依赖项
+```gradle
+implementation 'com.github.jenly1314:arcseekbar:1.0.3'
+
+```
+
+
+以前发布至JCenter的版本
 ```gradle
 implementation 'com.king.view:arcseekbar:1.0.2'
 ```
 
-### Lvy:
-```lvy
-<dependency org='com.king.view' name='arcseekbar' rev='1.0.2'>
-  <artifact name='$AID' ext='pom'></artifact>
-</dependency>
-```
-
-###### 如果Gradle出现compile失败的情况，可以在Project的build.gradle里面添加如下：（也可以使用上面的GitPack来complie）
-```gradle
-allprojects {
-    repositories {
-        maven { url 'https://dl.bintray.com/jenly/maven' }
-    }
-}
-```
 
 ## 示例
 
@@ -112,6 +110,10 @@ allprojects {
 更多使用详情，请查看[app](app)中的源码使用示例
 
 ## 版本记录
+
+#### v1.0.3：2021-9-1 (从v1.0.3开始发布至 MavenCentral)
+*  对外暴露更多getter和setter方法
+*  新增arcTickOffsetAngle属性
 
 #### v1.0.2：2020-12-2
 *  优化设置渐变色过程处理

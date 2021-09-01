@@ -28,6 +28,7 @@
         <attr name="arcTickPadding" format="dimension"/>
         <attr name="arcTickSplitAngle" format="integer"/>
         <attr name="arcBlockAngle" format="integer"/>
+        <attr name="arcTickOffsetAngle" format="integer"/>
         <attr name="arcThumbStrokeWidth" format="dimension"/>
         <attr name="arcThumbColor" format="color"/>
         <attr name="arcThumbRadius" format="dimension"/>

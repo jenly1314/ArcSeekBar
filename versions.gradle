@@ -1,7 +1,7 @@
 //App
 def app_version = [:]
-app_version.versionCode = 3
-app_version.versionName = "1.0.2"
+app_version.versionCode = 4
+app_version.versionName = "1.0.3"
 ext.app_version = app_version
 
 //build version
@@ -14,6 +14,8 @@ ext.build_versions = build_versions
 
 // App dependencies
 def versions = [:]
+versions.mavenPublish = '0.13.0'
+versions.gradle = '3.6.1'
 versions.junit = "1.1.1"
 versions.runner = "1.2.0"
 versions.espressoCore = "3.2.0"
