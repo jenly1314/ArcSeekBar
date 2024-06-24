@@ -1,41 +1,52 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion build_versions.compileSdk
-    buildToolsVersion build_versions.buildTools
+    namespace 'com.king.view.arcseekbar.app'
+
+    compileSdk build_versions.compileSdk
 
     defaultConfig {
         applicationId "com.king.view.arcseekbar.app"
-        minSdkVersion build_versions.minSdk
-        targetSdkVersion build_versions.targetSdk
+        minSdk build_versions.minSdk
+        targetSdk build_versions.targetSdk
         versionCode app_version.versionCode
         versionName app_version.versionName
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        vectorDrawables {
+            useSupportLibrary true
         }
     }
 
-    lintOptions {
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
         abortOnError false
         warning 'InvalidPackage'
     }
 
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation deps.junit
-    androidTestImplementation deps.runner
-    androidTestImplementation deps.espresso
+    testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test.ext:junit:$versions.androidExtJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
 
-    implementation deps.appcompat
-    implementation deps.constraintlayout
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
 
     implementation project(path: ':arcseekbar')
 

@@ -30,10 +30,11 @@
         <attr name="arcBlockAngle" format="integer"/>
         <attr name="arcTickOffsetAngle" format="integer"/>
         <attr name="arcThumbStrokeWidth" format="dimension"/>
-        <attr name="arcThumbColor" format="color"/>
+        <attr name="arcThumbColor" format="color"/>r
         <attr name="arcThumbRadius" format="dimension"/>
         <attr name="arcThumbRadiusEnlarges" format="dimension"/>
         <attr name="arcShowThumb" format="boolean"/>
+        <attr name="arcThumbDrawable" format="reference"/>
         <attr name="arcAllowableOffsets" format="dimension"/>
         <attr name="arcEnabledDrag" format="boolean"/>
         <attr name="arcEnabledSingle" format="boolean"/>

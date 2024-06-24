@@ -4,11 +4,16 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
+import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -188,6 +193,8 @@ public class ArcSeekBar extends View {
      * 拖动按钮的半径
      */
     private float mThumbRadius;
+
+    private Bitmap mThumbBitmap;
     /**
      * 拖动按钮的中心点X坐标
      */
@@ -274,6 +281,7 @@ public class ArcSeekBar extends View {
 
         mThumbRadiusEnlarges = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,displayMetrics);
 
+        Drawable thumbDrawable = null;
         int size = a.getIndexCount();
         for(int i = 0;i < size;i++){
             int attr = a.getIndex(i);
@@ -333,6 +341,8 @@ public class ArcSeekBar extends View {
                 mThumbColor = a.getColor(attr,mThumbColor);
             }else if(attr == R.styleable.ArcSeekBar_arcThumbRadius){
                 mThumbRadius = a.getDimension(attr,mThumbRadius);
+            }else if(attr == R.styleable.ArcSeekBar_arcThumbDrawable){
+                thumbDrawable = a.getDrawable(attr);
             }else if(attr == R.styleable.ArcSeekBar_arcThumbRadiusEnlarges) {
                 mThumbRadiusEnlarges = a.getDimension(attr, mThumbRadiusEnlarges);
             }else if(attr == R.styleable.ArcSeekBar_arcShowThumb) {
@@ -347,6 +357,10 @@ public class ArcSeekBar extends View {
         }
 
         isShowPercentText = TextUtils.isEmpty(mLabelText);
+
+        if(thumbDrawable != null) {
+            mThumbBitmap = getBitmapFormDrawable(thumbDrawable);
+        }
 
         a.recycle();
         mProgressPercent = (int)(mProgress * 100.0f / mMax);
@@ -371,6 +385,20 @@ public class ArcSeekBar extends View {
             }
         });
 
+    }
+
+    /**
+     * 根据 drawable 获取对应的 bitmap
+     *
+     * @param drawable
+     * @return
+     */
+    private Bitmap getBitmapFormDrawable(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
     private Paint.Cap getStrokeCap(int value){
@@ -490,7 +518,7 @@ public class ArcSeekBar extends View {
         mPaint.setStrokeCap(mStrokeCap);
 
         //进度圆半径
-        float diameter = mRadius * 2;
+        float diameter = mRadius * 2f;
         float startX = mCircleCenterX - mRadius;
         float startY = mCircleCenterY - mRadius;
         RectF rectF1 = new RectF(startX,startY,startX + diameter,startY + diameter);
@@ -520,17 +548,36 @@ public class ArcSeekBar extends View {
         if(isShowThumb){
             mPaint.reset();
             mPaint.setAntiAlias(true);
-            mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-            mPaint.setStrokeWidth(mThumbStrokeWidth);
-            mPaint.setColor(mThumbColor);
+
             float thumbAngle = mStartAngle + mSweepAngle * getRatio();
             //已知圆心，半径，角度，求圆上的点坐标
             mThumbCenterX = (float) (mCircleCenterX  + mRadius * Math.cos(Math.toRadians(thumbAngle)));
             mThumbCenterY = (float) (mCircleCenterY + mRadius * Math.sin(Math.toRadians(thumbAngle)));
-            if(isCanDrag){
-                canvas.drawCircle(mThumbCenterX,mThumbCenterY,mThumbRadius + mThumbRadiusEnlarges,mPaint);
-            }else{
-                canvas.drawCircle(mThumbCenterX,mThumbCenterY,mThumbRadius,mPaint);
+
+            if(mThumbBitmap != null) {
+                if (isCanDrag) {
+                    int size =  Math.min(mThumbBitmap.getWidth(), mThumbBitmap.getHeight());
+                    float ratio = (mThumbRadius + size) / size;
+                    int dstW = Math.round(mThumbBitmap.getWidth() * ratio);
+                    int dstH = Math.round(mThumbBitmap.getHeight() * ratio);
+                    int dstLeft = (int)(mThumbCenterX - Math.round(dstW / 2.0f));
+                    int dstTop = (int)(mThumbCenterY - Math.round(dstH / 2.0f));
+                    Rect dstRect = new Rect(dstLeft, dstTop, dstLeft + dstW, dstTop + dstH);
+                    canvas.drawBitmap(mThumbBitmap, null, dstRect, mPaint);
+                } else {
+                    float left = mThumbCenterX - mThumbBitmap.getWidth() / 2.0f;
+                    float top = mThumbCenterY - mThumbBitmap.getHeight() / 2.0f;
+                    canvas.drawBitmap(mThumbBitmap, left, top, mPaint);
+                }
+            } else {
+                mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+                mPaint.setStrokeWidth(mThumbStrokeWidth);
+                mPaint.setColor(mThumbColor);
+                if(isCanDrag){
+                    canvas.drawCircle(mThumbCenterX,mThumbCenterY,mThumbRadius + mThumbRadiusEnlarges,mPaint);
+                }else{
+                    canvas.drawCircle(mThumbCenterX,mThumbCenterY,mThumbRadius,mPaint);
+                }
             }
         }
 
@@ -555,8 +602,8 @@ public class ArcSeekBar extends View {
         // 计算文字高度
         float fontHeight = fontMetrics.bottom - fontMetrics.top;
         // 计算文字baseline
-        float textBaseX = getWidth() / 2 + mLabelPaddingLeft - mLabelPaddingRight;
-        float textBaseY = getHeight() - (getHeight() - fontHeight) / 2 - fontMetrics.bottom + mLabelPaddingTop - mLabelPaddingBottom;
+        float textBaseX = getWidth() / 2f + mLabelPaddingLeft - mLabelPaddingRight;
+        float textBaseY = getHeight() - (getHeight() - fontHeight) / 2f - fontMetrics.bottom + mLabelPaddingTop - mLabelPaddingBottom;
         if(isShowPercentText){//是否显示百分比
             canvas.drawText(mProgressPercent + "%",textBaseX,textBaseY,mTextPaint);
         }else if(!TextUtils.isEmpty(mLabelText)){//显示自定义文本
@@ -793,6 +840,9 @@ public class ArcSeekBar extends View {
     }
 
     private void setProgress(int progress,boolean fromUser){
+        if(this.mProgress == progress) {
+            return;
+        }
         if(progress < 0){
             progress = 0;
         }else if(progress > mMax){
@@ -1082,6 +1132,34 @@ public class ArcSeekBar extends View {
         }
 
     }
+
+    /**
+     * 设置拖动按钮拇指图片资源ID
+     *
+     * @param resId
+     */
+    public void setThumbDrawable(int resId) {
+        setThumbBitmap(BitmapFactory.decodeResource(getResources(), resId));
+    }
+
+    /**
+     * 设置拖动按钮拇指图片
+     *
+     */
+    public void setThumbDrawable(Drawable drawable) {
+        setThumbBitmap(getBitmapFormDrawable(drawable));
+    }
+
+    /**
+     * 设置拖动按钮拇指图片
+     *
+     * @param bitmap
+     */
+    public void setThumbBitmap(Bitmap bitmap) {
+        mThumbBitmap = bitmap;
+        invalidate();
+    }
+
 
     /**
      * 设置进度改变监听

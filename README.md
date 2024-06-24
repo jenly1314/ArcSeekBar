@@ -36,45 +36,46 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 2. 在Module的 **build.gradle** 里面添加引入依赖项
    ```gradle
-   implementation 'com.github.jenly1314:arcseekbar:1.0.3'
+   implementation 'com.github.jenly1314:arcseekbar:1.1.0'
    ```
 
 ## 使用
 
-### ArcSeekBar自定义属性说明（进度默认渐变色）
-| 属性 | 值类型 | 默认值 | 说明 |
-| :------| :------ | :------ | :------ |
-| arcStrokeWidth | dimension |12dp| 画笔描边的宽度 |
-| arcStrokeCap | enum | ROUND | 画笔的线冒样式 |
-| arcNormalColor | color |<font color=#C8C8C8>#FFC8C8C8</font>| 弧形正常颜色 |
-| arcProgressColor | color |<font color=#4FEAAC>#FF4FEAAC</font>| 弧形进度颜色 |
-| arcStartAngle | integer | 270 | 开始角度，默认十二点钟方向 |
-| arcSweepAngle | integer | 360 | 扫描角度范围 |
-| arcMax | integer | 100 | 进度最大值 |
-| arcProgress | integer | 0 | 当前进度 |
-| arcDuration | integer | 500 | 动画时长 |
-| arcLabelText | string |  | 中间的标签文本，默认自动显示百分比 |
-| arcLabelTextColor | color |<font color=#333333>#FF333333</font>| 文本字体颜色 |
-| arcLabelTextSize | dimension |30sp| 文本字体大小 |
-| arcLabelPaddingTop | dimension |0dp| 文本居顶边内间距 |
-| arcLabelPaddingBottom | dimension |0dp| 文本居底边内间距 |
-| arcLabelPaddingLeft | dimension |0dp| 文本居左边内间距 |
-| arcLabelPaddingRight | dimension |0dp| 文本居右边内间距 |
-| arcShowLabel | boolean | true | 是否显示文本 |
-| arcShowTick | boolean | true | 是否显示环刻度 |
-| arcTickStrokeWidth | dimension |10dp| 刻度描边宽度 |
-| arcTickPadding | dimension | 2dp | 环刻度与环间距 |
-| arcTickSplitAngle | integer | 5 | 刻度间隔的角度大小 |
-| arcBlockAngle | integer | 1 | 刻度的角度大小 |
-| arcTickOffsetAngle | integer | 0 | 刻度偏移的角度大小 |
-| arcThumbStrokeWidth | dimension |8dp| 拖动按钮描边宽度 |
-| arcThumbColor | color |<font color=#E8D30F>#FFE8D30F</font>| 拖动按钮颜色 |
-| arcThumbRadius | dimension |10dp| 拖动按钮半径 |
-| arcThumbRadiusEnlarges | dimension |8dp| 触摸时按钮半径放大量 |
-| arcShowThumb | boolean | true | 是否显示拖动按钮 |
-| arcAllowableOffsets | dimension |10dp| 触摸时可偏移距离：偏移量越大，触摸精度越小 |
-| arcEnabledDrag | boolean | true | 是否启用通过拖动改变进度 |
-| arcEnabledSingle | boolean | true | 是否启用通过点击改变进度 |
+### ArcSeekBar自定义属性说明（进度默认为渐变色）
+| 属性 | 值类型 | 默认值 | 说明                                          |
+| :------| :------ | :------ |:--------------------------------------------|
+| arcStrokeWidth | dimension |12dp| 画笔描边的宽度                                     |
+| arcStrokeCap | enum | ROUND | 画笔的线冒样式                                     |
+| arcNormalColor | color |<font color=#C8C8C8>#FFC8C8C8</font>| 弧形正常颜色                                      |
+| arcProgressColor | color |<font color=#4FEAAC>#FF4FEAAC</font>| 弧形进度颜色                                      |
+| arcStartAngle | integer | 270 | 开始角度，默认十二点钟方向                               |
+| arcSweepAngle | integer | 360 | 扫描角度范围                                      |
+| arcMax | integer | 100 | 进度最大值                                       |
+| arcProgress | integer | 0 | 当前进度                                        |
+| arcDuration | integer | 500 | 动画时长                                        |
+| arcLabelText | string |  | 中间的标签文本，默认自动显示百分比                           |
+| arcLabelTextColor | color |<font color=#333333>#FF333333</font>| 文本字体颜色                                      |
+| arcLabelTextSize | dimension |30sp| 文本字体大小                                      |
+| arcLabelPaddingTop | dimension |0dp| 文本居顶边内间距                                    |
+| arcLabelPaddingBottom | dimension |0dp| 文本居底边内间距                                    |
+| arcLabelPaddingLeft | dimension |0dp| 文本居左边内间距                                    |
+| arcLabelPaddingRight | dimension |0dp| 文本居右边内间距                                    |
+| arcShowLabel | boolean | true | 是否显示文本                                      |
+| arcShowTick | boolean | true | 是否显示环刻度                                     |
+| arcTickStrokeWidth | dimension |10dp| 刻度描边宽度                                      |
+| arcTickPadding | dimension | 2dp | 环刻度与环间距                                     |
+| arcTickSplitAngle | integer | 5 | 刻度间隔的角度大小                                   |
+| arcBlockAngle | integer | 1 | 刻度的角度大小                                     |
+| arcTickOffsetAngle | integer | 0 | 刻度偏移的角度大小                                   |
+| arcThumbStrokeWidth | dimension |8dp| 拖动按钮描边宽度                                    |
+| arcThumbColor | color |<font color=#E8D30F>#FFE8D30F</font>| 拖动按钮颜色                                      |
+| arcThumbRadius | dimension |10dp| 拖动按钮半径                                      |
+| arcThumbRadiusEnlarges | dimension |8dp| 触摸时按钮半径放大量                                  |
+| arcShowThumb | boolean | true | 是否显示拖动按钮                                    |
+| arcThumbDrawable | reference |  | 拖动按钮图片（arcThumbDrawable的优先级高于arcThumbColor） |
+| arcAllowableOffsets | dimension |10dp| 触摸时可偏移距离：偏移量越大，触摸精度越小                       |
+| arcEnabledDrag | boolean | true | 是否启用通过拖动改变进度                                |
+| arcEnabledSingle | boolean | true | 是否启用通过点击改变进度                                |
 
 
 ### 示例
@@ -105,9 +106,14 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 ## 版本记录
 
+#### v1.1.0：2024-6-25
+*  新增自定义属性`arcThumbDrawable`
+*  优化细节
+
 #### v1.0.3：2021-9-1 (从v1.0.3开始发布至 MavenCentral)
 *  对外暴露更多getter和setter方法
 *  新增arcTickOffsetAngle属性
+*  发布至 **MavenCentral**
 
 #### v1.0.2：2020-12-2
 *  优化设置渐变色过程处理
