@@ -557,7 +557,7 @@ public class ArcSeekBar extends View {
             if(mThumbBitmap != null) {
                 if (isCanDrag) {
                     int size =  Math.min(mThumbBitmap.getWidth(), mThumbBitmap.getHeight());
-                    float ratio = (mThumbRadius + size) / size;
+                    float ratio = (mThumbRadiusEnlarges * 2 + size) / size;
                     int dstW = Math.round(mThumbBitmap.getWidth() * ratio);
                     int dstH = Math.round(mThumbBitmap.getHeight() * ratio);
                     int dstLeft = (int)(mThumbCenterX - Math.round(dstW / 2.0f));
