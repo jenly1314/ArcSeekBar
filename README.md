@@ -62,12 +62,12 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 | arcLabelPaddingRight | dimension | 0dp                                  | 文本居右边内间距                                    |
 | arcShowLabel | boolean | true                                 | 是否显示文本                                      |
 | arcShowTick | boolean | true                                 | 是否显示环刻度                                     |
-| arcTickStrokeWidth | dimension | 10dp                                 | 刻度描边宽度                                      |
+| arcTickStrokeWidth | dimension | 10dp                                 | 刻度画笔宽度                                      |
 | arcTickPadding | dimension | 2dp                                  | 环刻度与环间距                                     |
 | arcTickSplitAngle | integer | 5                                    | 刻度间隔的角度大小                                   |
 | arcBlockAngle | integer | 1                                    | 刻度的角度大小                                     |
 | arcTickOffsetAngle | integer | 0                                    | 刻度偏移的角度大小                                   |
-| arcThumbStrokeWidth | dimension | 10dp                                 | 拖动按钮描边宽度                                    |
+| arcThumbStrokeWidth | dimension | 10dp                                 | 拖动按钮画笔宽度                                    |
 | arcThumbColor | color | <font color=#E8D30F>#FFE8D30F</font> | 拖动按钮颜色                                      |
 | arcThumbRadius | dimension | 8dp                                  | 拖动按钮半径                                      |
 | arcThumbRadiusEnlarges | dimension | 2dp                                  | 触摸时按钮半径放大量                                  |
@@ -85,7 +85,8 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
     <com.king.view.arcseekbar.ArcSeekBar
         android:id="@+id/arcSeekBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:arcEnabledDrag="true"/>
 ```
 
 代码示例
