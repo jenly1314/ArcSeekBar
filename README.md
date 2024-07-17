@@ -36,7 +36,7 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 2. 在Module的 **build.gradle** 里面添加引入依赖项
    ```gradle
-   implementation 'com.github.jenly1314:arcseekbar:1.1.0'
+   implementation 'com.github.jenly1314:arcseekbar:1.1.1'
    ```
 
 ## 使用
@@ -106,7 +106,8 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 ## 版本记录
 
-#### 待发布版本（[提前体验](test.md)）
+#### v1.1.1：2024-7-17
+*  优化细节
 
 #### v1.1.0：2024-6-25
 *  新增自定义属性`arcThumbDrawable`
