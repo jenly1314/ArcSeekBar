@@ -20,6 +20,6 @@
 2. 在Module的 **build.gradle** 里面添加引入依赖项
 
     ```gradle
-   implementation 'com.github.jenly1314:ArcSeekBar:4bea9effba'
+   implementation 'com.github.jenly1314:ArcSeekBar:17b52aba64'
 
     ```
