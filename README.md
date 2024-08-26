@@ -1,10 +1,8 @@
 # ArcSeekBar
 
 [![Download](https://img.shields.io/badge/download-App-blue.svg)](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk)
-[![JCenter](https://img.shields.io/badge/JCenter-1.0.2-46C018.svg)](https://bintray.com/beta/#/jenly/maven/arcseekbar)
 [![MavenCentral](https://img.shields.io/maven-central/v/com.github.jenly1314/arcseekbar)](https://repo1.maven.org/maven2/com/github/jenly1314/arcseekbar)
 [![JitPack](https://jitpack.io/v/jenly1314/ArcSeekBar.svg)](https://jitpack.io/#jenly1314/ArcSeekBar)
-[![CI](https://travis-ci.org/jenly1314/ArcSeekBar.svg?branch=master)](https://travis-ci.org/jenly1314/ArcSeekBar)
 [![CircleCI](https://circleci.com/gh/jenly1314/ArcSeekBar.svg?style=svg)](https://circleci.com/gh/jenly1314/ArcSeekBar)
 [![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
@@ -12,9 +10,9 @@
 ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完全可定制化。
 
 **ArcSeekBar** 是基于 [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 修改而来的库。
-但青出于蓝而胜于蓝，所以 [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 的大部分用法，**ArcSeekBar**基本都支持，而且可配置的参数更细致。
+但青出于蓝而胜于蓝，所以 [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 的大部分用法，**ArcSeekBar** 基本都支持，而且可配置的参数更细致。
 
-之所以新造一个ArcSeekBar库，而不直接在**CircleProgressView**上面直接改，原因是**CircleProgressView**里面的部分动画效果对于**SeekBar**并不适用，所以**ArcSeekBar**是在**CircleProgressView**的基础上有所删减后，而再进行扩展增强的。
+之所以新造一个ArcSeekBar库，而不直接在 **CircleProgressView** 上面直接改，原因是 **CircleProgressView** 里面的部分动画效果对于 **SeekBar** 并不适用，所以 **ArcSeekBar** 是在 **CircleProgressView** 的基础上有所删减后，而再进行扩展增强的。
 实际还需根据具体的需求而选择适合的。
 
 ## Gif 展示
@@ -99,13 +97,15 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
     arcSeekBar.showAnimation(80,3000);
 
 ```
-更多使用详情，请查看[app](app)中的源码使用示例或直接查看 [API帮助文档](https://jitpack.io/com/github/jenly1314/ArcSeekBar/latest/javadoc/)
+更多使用详情，请查看[app](app)中的源码使用示例或直接查看 [API帮助文档](https://jenly1314.github.io/ArcSeekBar/api/)
 
 ## 相关推荐
 
 #### [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 一个圆形的进度动画控件，动画效果纵享丝滑。
 
-## 版本记录
+<!-- end -->
+
+## 版本日志
 
 #### v1.1.1：2024-7-17
 *  优化细节
