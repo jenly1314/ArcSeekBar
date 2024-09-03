@@ -101,7 +101,7 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 ## 相关推荐
 
-#### [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 一个圆形的进度动画控件，动画效果纵享丝滑。
+- [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 一个圆形的进度动画控件，动画效果纵享丝滑。
 
 <!-- end -->
 
