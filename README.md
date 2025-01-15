@@ -107,26 +107,10 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 ## 版本日志
 
-#### v1.1.1：2024-7-17
-*  优化细节
+#### 待发布版本（[提前体验](test.md)）
+*  修复BUG：最大值多次动态变化后，会影响到进度拖动问题。（[#14](https://github.com/jenly1314/ArcSeekBar/issues/14)）
 
-#### v1.1.0：2024-6-25
-*  新增自定义属性`arcThumbDrawable`
-*  优化细节
-
-#### v1.0.3：2021-9-1 (从v1.0.3开始发布至 MavenCentral)
-*  对外暴露更多getter和setter方法
-*  新增arcTickOffsetAngle属性
-*  发布至 **MavenCentral**
-
-#### v1.0.2：2020-12-2
-*  优化设置渐变色过程处理
-
-#### v1.0.1：2020-9-16
-*  优化细节
-
-#### v1.0.0：2020-3-28
-*  ArcSeekBar初始版本
+#### [查看更多版本日志](CHANGELOG.md)
 
 ## 赞赏
 如果您喜欢ArcSeekBar，或感觉ArcSeekBar帮助到了您，可以点右上角“Star”支持一下，您的支持就是我的动力，谢谢 :smiley:
