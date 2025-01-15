@@ -850,6 +850,7 @@ public class ArcSeekBar extends View {
     public void setMax(int max) {
         if (max > 0) {
             this.mMax = max;
+            mProgressPercent = (int) (mProgress * 100.0f / mMax);
             invalidate();
         }
     }
