@@ -10,10 +10,10 @@
 ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完全可定制化。
 
 **ArcSeekBar** 是基于 [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 修改而来的库。
-但青出于蓝而胜于蓝，所以 [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 的大部分用法，**ArcSeekBar** 基本都支持，而且可配置的参数更细致。
+但青出于蓝而胜于蓝，所以 [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 的大部分用法，**ArcSeekBar** 基本都支持，而且 **ArcSeekBar** 支持的功能点更多，可配置的参数更细致。
 
-之所以新造一个ArcSeekBar库，而不直接在 **CircleProgressView** 上面直接改，原因是 **CircleProgressView** 里面的部分动画效果对于 **SeekBar** 并不适用，所以 **ArcSeekBar** 是在 **CircleProgressView** 的基础上有所删减后，而再进行扩展增强的。
-实际还需根据具体的需求而选择适合的。
+> 之所以创建一个 **ArcSeekBar** 而非直接修改 **CircleProgressView** ，主要是因为 **CircleProgressView** 中并不涉及 SeekBar 的场景。
+> 还有一个原因是 **ArcSeekBar** 和 **CircleProgressView** 的实现效果存在不同点；至于到底应该用 **CircleProgressView** 还是 **ArcSeekBar**，你可以根据需要去选择更符合自己需求的。
 
 ## Gif 展示
 ![Image](GIF.gif)
