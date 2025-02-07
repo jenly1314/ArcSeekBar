@@ -24,7 +24,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 /**
  * 一个弧形的拖动条进度控件，配置参数完全可定制化。
  *
@@ -33,7 +32,6 @@ import android.view.View;
  * <a href="https://github.com/jenly1314">Follow me</a>
  */
 public class ArcSeekBar extends View {
-
 
     /**
      * 画笔
@@ -46,9 +44,14 @@ public class ArcSeekBar extends View {
     private TextPaint mTextPaint;
 
     /**
-     * 笔画描边的宽度
+     * 弧形正常画笔描边的宽度
      */
-    private float mStrokeWidth;
+    private float mNormalStrokeWidth;
+
+    /**
+     * 弧形进度条画笔描边的宽度
+     */
+    private float mProgressStrokeWidth;
 
     /**
      *
@@ -270,7 +273,7 @@ public class ArcSeekBar extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ArcSeekBar);
 
         DisplayMetrics displayMetrics = getDisplayMetrics();
-        mStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, displayMetrics);
+        float strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, displayMetrics);
 
         mLabelTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30, displayMetrics);
 
@@ -282,7 +285,6 @@ public class ArcSeekBar extends View {
 
         mThumbStrokeWidth = mThumbRadius;
 
-
         mAllowableOffsets = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, displayMetrics);
 
         mThumbRadiusEnlarges = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, displayMetrics);
@@ -292,7 +294,11 @@ public class ArcSeekBar extends View {
         for (int i = 0; i < size; i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.ArcSeekBar_arcStrokeWidth) {
-                mStrokeWidth = a.getDimension(attr, mStrokeWidth);
+                strokeWidth = a.getDimension(attr, strokeWidth);
+            } else if (attr == R.styleable.ArcSeekBar_arcNormalStrokeWidth) {
+                mNormalStrokeWidth = a.getDimension(attr, 0);
+            } else if (attr == R.styleable.ArcSeekBar_arcProgressStrokeWidth) {
+                mProgressStrokeWidth = a.getDimension(attr, 0);
             } else if (attr == R.styleable.ArcSeekBar_arcStrokeCap) {
                 mStrokeCap = getStrokeCap(a.getInt(attr, 3));
             } else if (attr == R.styleable.ArcSeekBar_arcNormalColor) {
@@ -362,6 +368,13 @@ public class ArcSeekBar extends View {
             }
         }
 
+        if(mNormalStrokeWidth == 0) {
+            mNormalStrokeWidth = strokeWidth;
+        }
+        if(mProgressStrokeWidth == 0){
+            mProgressStrokeWidth = strokeWidth;
+        }
+
         isShowPercentText = TextUtils.isEmpty(mLabelText);
 
         if (thumbDrawable != null) {
@@ -369,6 +382,7 @@ public class ArcSeekBar extends View {
         }
 
         a.recycle();
+
         mProgressPercent = (int) (mProgress * 100.0f / mMax);
         mPaint = new Paint();
         mTextPaint = new TextPaint();
@@ -432,14 +446,14 @@ public class ArcSeekBar extends View {
 
         int width = measureHandler(widthMeasureSpec, defaultValue);
         int height = measureHandler(heightMeasureSpec, defaultValue);
+        int size = Math.min(width, height);
 
         //圆心坐标
-        mCircleCenterX = (width + getPaddingLeft() - getPaddingRight()) / 2.0f;
-        mCircleCenterY = (height + getPaddingTop() - getPaddingBottom()) / 2.0f;
+        mCircleCenterX = (width + getPaddingLeft() - getPaddingRight()) / 2f;
+        mCircleCenterY = (height + getPaddingTop() - getPaddingBottom()) / 2f;
         //计算间距
         int padding = Math.max(getPaddingLeft() + getPaddingRight(), getPaddingTop() + getPaddingBottom());
-        //半径=视图宽度-横向或纵向内间距值 - 画笔宽度
-        mRadius = (width - padding - Math.max(mStrokeWidth, mThumbStrokeWidth)) / 2.0f - mThumbRadius;
+        mRadius = (size - padding - mThumbStrokeWidth) / 2f - mThumbRadius;
 
         //默认着色器
         mShader = new SweepGradient(mCircleCenterX, mCircleCenterX, mShaderColors, null);
@@ -489,13 +503,14 @@ public class ArcSeekBar extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        if (isShowTick) {//是否显示刻度
+        //是否显示刻度
+        if (isShowTick) {
             mPaint.setStrokeWidth(mTickStrokeWidth);
-            float circleRadius = mRadius - mTickPadding - mStrokeWidth;
-            float tickDiameter = circleRadius * 2;
-            float tickStartX = mCircleCenterX - circleRadius;
-            float tickStartY = mCircleCenterY - circleRadius;
-            RectF rectF = new RectF(tickStartX, tickStartY, tickStartX + tickDiameter, tickStartY + tickDiameter);
+            float tickRadius = mRadius - (mThumbStrokeWidth / 2f + mThumbRadius) - mTickPadding;
+            float tickDiameter = tickRadius * 2;
+            float tickStartX = mCircleCenterX - tickRadius;
+            float tickStartY = mCircleCenterY - tickRadius;
+            RectF tickRect = new RectF(tickStartX, tickStartY, tickStartX + tickDiameter, tickStartY + tickDiameter);
 
             final int currentBlockIndex = (int) (mProgressPercent / 100f * mTotalTickCount);
 
@@ -508,74 +523,79 @@ public class ArcSeekBar extends View {
                         mPaint.setColor(mProgressColor);
                     }
                     //绘制刻度
-                    canvas.drawArc(rectF, i * (mBlockAngle + mTickSplitAngle) + mStartAngle + mTickOffsetAngle, mBlockAngle, false, mPaint);
+                    canvas.drawArc(tickRect, i * (mBlockAngle + mTickSplitAngle) + mStartAngle + mTickOffsetAngle, mBlockAngle, false, mPaint);
                 } else {
                     if (mNormalColor != 0) {
                         //未选中的刻度
                         mPaint.setShader(null);
                         mPaint.setColor(mNormalColor);
                         //绘制刻度
-                        canvas.drawArc(rectF, i * (mBlockAngle + mTickSplitAngle) + mStartAngle + mTickOffsetAngle, mBlockAngle, false, mPaint);
+                        canvas.drawArc(tickRect, i * (mBlockAngle + mTickSplitAngle) + mStartAngle + mTickOffsetAngle, mBlockAngle, false, mPaint);
                     }
                 }
             }
 
         }
 
-        mPaint.setStrokeWidth(mStrokeWidth);
-        mPaint.setShader(null);
         mPaint.setStrokeCap(mStrokeCap);
 
-        //进度圆半径
+        // 进度圆直径
         float diameter = mRadius * 2f;
         float startX = mCircleCenterX - mRadius;
         float startY = mCircleCenterY - mRadius;
-        RectF rectF1 = new RectF(startX, startY, startX + diameter, startY + diameter);
+        RectF rect = new RectF(startX, startY, startX + diameter, startY + diameter);
 
         if (mNormalColor != 0) {
+            mPaint.setStrokeWidth(mNormalStrokeWidth);
+            mPaint.setShader(null);
+
             mPaint.setColor(mNormalColor);
             //绘制底层弧形
-            canvas.drawArc(rectF1, mStartAngle, mSweepAngle, false, mPaint);
-        }
-
-        //着色器不为空则设置着色器，反之用纯色
-        if (isShader && mShader != null) {
-            mPaint.setShader(mShader);
-        } else {
-            mPaint.setColor(mProgressColor);
+            canvas.drawArc(rect, mStartAngle, mSweepAngle, false, mPaint);
         }
 
         float ratio = getRatio();
         if (ratio != 0) {
+            mPaint.setStrokeWidth(mProgressStrokeWidth);
+            //着色器不为空则设置着色器，反之用纯色
+            if (isShader && mShader != null) {
+                mPaint.setShader(mShader);
+            } else {
+                mPaint.setColor(mProgressColor);
+            }
             //绘制当前进度弧形
-            canvas.drawArc(rectF1, mStartAngle, mSweepAngle * ratio, false, mPaint);
+            canvas.drawArc(rect, mStartAngle, mSweepAngle * ratio, false, mPaint);
         }
 
     }
 
+    /**
+     * 绘制拇指按钮
+     * @param canvas
+     */
     private void drawThumb(Canvas canvas) {
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+
+        float thumbAngle = mStartAngle + mSweepAngle * getRatio();
+        //已知圆心，半径，角度，求圆上的点坐标
+        mThumbCenterX = (float) (mCircleCenterX + mRadius * Math.cos(Math.toRadians(thumbAngle)));
+        mThumbCenterY = (float) (mCircleCenterY + mRadius * Math.sin(Math.toRadians(thumbAngle)));
+
         if (isShowThumb) {
-            mPaint.reset();
-            mPaint.setAntiAlias(true);
-
-            float thumbAngle = mStartAngle + mSweepAngle * getRatio();
-            //已知圆心，半径，角度，求圆上的点坐标
-            mThumbCenterX = (float) (mCircleCenterX + mRadius * Math.cos(Math.toRadians(thumbAngle)));
-            mThumbCenterY = (float) (mCircleCenterY + mRadius * Math.sin(Math.toRadians(thumbAngle)));
-
             if (mThumbBitmap != null) {
                 if (isCanDrag) {
                     int size = Math.min(mThumbBitmap.getWidth(), mThumbBitmap.getHeight());
                     float ratio = (mThumbRadiusEnlarges * 2 + size) / size;
                     int dstW = Math.round(mThumbBitmap.getWidth() * ratio);
                     int dstH = Math.round(mThumbBitmap.getHeight() * ratio);
-                    int dstLeft = (int) (mThumbCenterX - Math.round(dstW / 2.0f));
-                    int dstTop = (int) (mThumbCenterY - Math.round(dstH / 2.0f));
+                    int dstLeft = (int) (mThumbCenterX - Math.round(dstW / 2f));
+                    int dstTop = (int) (mThumbCenterY - Math.round(dstH / 2f));
                     Rect dstRect = new Rect(dstLeft, dstTop, dstLeft + dstW, dstTop + dstH);
                     canvas.drawBitmap(mThumbBitmap, null, dstRect, mPaint);
                 } else {
-                    float left = mThumbCenterX - mThumbBitmap.getWidth() / 2.0f;
-                    float top = mThumbCenterY - mThumbBitmap.getHeight() / 2.0f;
+                    float left = mThumbCenterX - mThumbBitmap.getWidth() / 2f;
+                    float top = mThumbCenterY - mThumbBitmap.getHeight() / 2f;
                     canvas.drawBitmap(mThumbBitmap, left, top, mPaint);
                 }
             } else {
@@ -665,7 +685,7 @@ public class ArcSeekBar extends View {
      */
     private boolean isInArc(float x, float y) {
         float distance = getDistance(mCircleCenterX, mCircleCenterY, x, y);
-        if (Math.abs(distance - mRadius) <= mStrokeWidth / 2f + mAllowableOffsets) {
+        if (Math.abs(distance - mRadius) <= mThumbRadius + mAllowableOffsets) {
             if (mSweepAngle < 360) {
                 float angle = (getTouchDegrees(x, y) + mStartAngle) % 360;
                 if (mStartAngle + mSweepAngle <= 360) {
@@ -695,7 +715,7 @@ public class ArcSeekBar extends View {
     }
 
     /**
-     * 更新多拽进度
+     * 更新拖拽进度
      *
      * @param x
      * @param y
@@ -712,8 +732,8 @@ public class ArcSeekBar extends View {
                 progress = mMax;
             }
             int progressPercent = (int) (progress * 100.0f / mMax);
-            //拖动进度突变不允许超过30%
-            if (Math.abs(progressPercent - mProgressPercent) > 30) {
+            //拖动进度突变不允许超过50%
+            if (Math.abs(progressPercent - mProgressPercent) > 50) {
                 return;
             }
         }
@@ -952,6 +972,7 @@ public class ArcSeekBar extends View {
 
     /**
      * 开始角度(默认从12点钟方向开始)
+     *
      * @return
      */
     public int getStartAngle() {
@@ -960,6 +981,7 @@ public class ArcSeekBar extends View {
 
     /**
      * 扫描角度(一个圆)
+     *
      * @return
      */
     public int getSweepAngle() {
@@ -1219,6 +1241,7 @@ public class ArcSeekBar extends View {
 
     /**
      * 获取文本标签的字体颜色
+     *
      * @return
      */
     public int getLabelTextColor() {

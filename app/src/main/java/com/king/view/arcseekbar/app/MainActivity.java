@@ -1,18 +1,21 @@
 package com.king.view.arcseekbar.app;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.king.view.arcseekbar.ArcSeekBar;
 
-
+/**
+ * 示例
+ *
+ * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
+ * <p>
+ * <a href="https://github.com/jenly1314">Follow me</a>
+ */
 public class MainActivity extends AppCompatActivity {
 
     ArcSeekBar arcSeekBar1;
@@ -38,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.btn1:
-                arcSeekBar2.showAnimation(arcSeekBar2.getProgress() == 100 ? 0 :arcSeekBar2.getProgress(),100,3000);
+                arcSeekBar2.showAnimation(arcSeekBar2.getProgress() == 100 ? 0 : arcSeekBar2.getProgress(), 100, 3000);
                 break;
             case R.id.btn2:
-                arcSeekBar2.showAnimation(arcSeekBar2.getProgress() == 0 ? 100 :arcSeekBar2.getProgress(),0,3000);
+                arcSeekBar2.showAnimation(arcSeekBar2.getProgress() == 0 ? 100 : arcSeekBar2.getProgress(), 0, 3000);
                 break;
         }
     }

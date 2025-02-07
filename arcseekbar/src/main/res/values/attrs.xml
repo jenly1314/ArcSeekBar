@@ -2,7 +2,10 @@
 <resources>
 
     <declare-styleable name="ArcSeekBar">
-        <attr name="arcStrokeWidth" format="dimension"/>
+        <!-- @deprecated 使用 arcNormalStrokeWidth 和 arcProgressStrokeWidth 来代替arcStrokeWidth -->
+        <attr name="arcStrokeWidth" format="dimension" />
+        <attr name="arcNormalStrokeWidth" format="dimension"/>
+        <attr name="arcProgressStrokeWidth" format="dimension"/>
         <attr name="arcStrokeCap" format="enum">
             <enum name="BUTT" value="1"/>
             <enum name="SQUARE" value="2"/>
@@ -38,7 +41,6 @@
         <attr name="arcAllowableOffsets" format="dimension"/>
         <attr name="arcEnabledDrag" format="boolean"/>
         <attr name="arcEnabledSingle" format="boolean"/>
-
     </declare-styleable>
 
 

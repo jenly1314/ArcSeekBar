@@ -1,5 +1,10 @@
 ## 版本日志
 
+#### v1.2.0 2025-2-7
+*  新增属性：`arcNormalStrokeWidth` 和 `arcProgressStrokeWidth`（废弃属性：`arcStrokeWidth`）
+*  修复BUG：最大值多次动态变化后，会影响到进度拖动问题。（[#14](https://github.com/jenly1314/ArcSeekBar/issues/14)）
+*  优化细节
+
 #### v1.1.1：2024-7-17
 *  优化细节
 
