@@ -1,11 +1,12 @@
 # ArcSeekBar
 
-[![Download](https://img.shields.io/badge/download-App-blue.svg)](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk)
-[![MavenCentral](https://img.shields.io/maven-central/v/com.github.jenly1314/arcseekbar)](https://repo1.maven.org/maven2/com/github/jenly1314/arcseekbar)
-[![JitPack](https://jitpack.io/v/jenly1314/ArcSeekBar.svg)](https://jitpack.io/#jenly1314/ArcSeekBar)
-[![CircleCI](https://circleci.com/gh/jenly1314/ArcSeekBar.svg?style=svg)](https://circleci.com/gh/jenly1314/ArcSeekBar)
-[![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=16)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
+[![MavenCentral](https://img.shields.io/maven-central/v/com.github.jenly1314/arcseekbar?logo=sonatype)](https://repo1.maven.org/maven2/com/github/jenly1314/ArcSeekBar)
+[![JitPack](https://img.shields.io/jitpack/v/github/jenly1314/ArcSeekBar?logo=jitpack)](https://jitpack.io/#jenly1314/ArcSeekBar)
+[![CI](https://img.shields.io/github/actions/workflow/status/jenly1314/ArcSeekBar/build.yml?logo=github)](https://github.com/jenly1314/ArcSeekBar/actions/workflows/build.yml)
+[![Download](https://img.shields.io/badge/download-APK-brightgreen?logo=github)](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk)
+[![API](https://img.shields.io/badge/API-21%2B-brightgreen?logo=android)](https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels)
+[![License](https://img.shields.io/github/license/jenly1314/ArcSeekBar?logo=open-source-initiative)](https://opensource.org/licenses/mit)
+
 
 ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完全可定制化。
 
@@ -15,7 +16,7 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 > 之所以创建一个 **ArcSeekBar** 而非直接修改 **CircleProgressView** ，主要是因为 **CircleProgressView** 中并不涉及 SeekBar 的场景。
 > 还有一个原因是 **ArcSeekBar** 和 **CircleProgressView** 的实现效果存在不同点；至于到底应该用 **CircleProgressView** 还是 **ArcSeekBar**，你可以根据需要去选择更符合自己需求的。
 
-## Gif 展示
+## 效果展示
 ![Image](GIF.gif)
 
 > 你也可以直接下载 [演示App](https://raw.githubusercontent.com/jenly1314/ArcSeekBar/master/app/release/app-release.apk) 体验效果
@@ -32,7 +33,7 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
     }
     ```
 
-2. 在Module的 **build.gradle** 里面添加引入依赖项
+2. 在Module的 **build.gradle** 中添加依赖项
    ```gradle
    implementation 'com.github.jenly1314:arcseekbar:1.2.0'
    ```
@@ -42,7 +43,7 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 ### ArcSeekBar自定义属性说明（进度默认为渐变色）
 | 属性                     | 值类型 | 默认值                                  | 说明                                                             |
 |:-----------------------| :------ |:-------------------------------------|:---------------------------------------------------------------|
-| ~~arcStrokeWidth~~     | dimension | 12dp                                 | 画笔描边的宽度（已废弃，改用`arcNormalStrokeWidth`和`arcProgressStrokeWidth`） |
+| ~~arcStrokeWidth~~     | dimension | 12dp                                 | 画笔描边的宽度（v1.2.0已废弃，改用`arcNormalStrokeWidth`和`arcProgressStrokeWidth`） |
 | arcNormalStrokeWidth   | dimension | 12dp                                 | 弧形正常画笔描边的宽度（v1.2.0新增）                                          |
 | arcProgressStrokeWidth | dimension | 12dp                                 | 弧形进度条画笔描边的宽度（v1.2.0新增）                                         |
 | arcStrokeCap           | enum | ROUND                                | 画笔的线冒样式                                                        |
@@ -111,7 +112,16 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 - [CircleProgressView](https://github.com/jenly1314/CircleProgressView) 一个圆形的进度动画控件，动画效果纵享丝滑。
 - [SpinCounterView](https://github.com/jenly1314/SpinCounterView) 一个类似码表变化的旋转计数器动画控件。
+- [CounterView](https://github.com/jenly1314/CounterView) 一个数字变化效果的计数器视图控件。
 - [RadarView](https://github.com/jenly1314/RadarView) 一个雷达扫描动画后，然后展示得分效果的控件。
+- [SuperTextView](https://github.com/jenly1314/SuperTextView) 一个在TextView的基础上扩展了几种动画效果的控件。
+- [LoadingView](https://github.com/jenly1314/LoadingView) 一个圆弧加载过渡动画，圆弧个数，大小，弧度，渐变颜色，完全可配。
+- [WaveView](https://github.com/jenly1314/WaveView) 一个水波纹动画控件视图，支持波纹数，波纹振幅，波纹颜色，波纹速度，波纹方向等属性完全可配。
+- [GiftSurfaceView](https://github.com/jenly1314/GiftSurfaceView) 一个适用于直播间送礼物拼图案的动画控件。
+- [FlutteringLayout](https://github.com/jenly1314/FlutteringLayout) 一个适用于直播间点赞桃心飘动效果的控件。
+- [DragPolygonView](https://github.com/jenly1314/DragPolygonView) 一个支持可拖动多边形，支持通过拖拽多边形的角改变其形状的任意多边形控件。
+- [DrawBoard](https://github.com/jenly1314/DrawBoard) 一个自定义View实现的画板；方便对图片进行编辑和各种涂鸦相关操作。
+- [compose-component](https://github.com/jenly1314/compose-component) 一个Jetpack Compose的组件库；主要提供了一些小组件，便于快速使用。
 
 <!-- end -->
 
@@ -124,26 +134,6 @@ ArcSeekBar for Android 是一个弧形的拖动条进度控件，配置参数完
 
 #### [查看更多版本日志](CHANGELOG.md)
 
-## 赞赏
-如果您喜欢ArcSeekBar，或感觉ArcSeekBar帮助到了您，可以点右上角“Star”支持一下，您的支持就是我的动力，谢谢 :smiley:
-<p>您也可以扫描下面的二维码，请作者喝杯咖啡 :coffee:
+---
 
-<div>
-   <img src="https://jenly1314.github.io/image/page/rewardcode.png">
-</div>
-
-## 关于我
-
-| 我的博客                                                                                | GitHub                                                                                  | Gitee                                                                                  | CSDN                                                                                 | 博客园                                                                            |
-|:------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------|
-| <a title="我的博客" href="https://jenly1314.github.io" target="_blank">Jenly's Blog</a> | <a title="GitHub开源项目" href="https://github.com/jenly1314" target="_blank">jenly1314</a> | <a title="Gitee开源项目" href="https://gitee.com/jenly1314" target="_blank">jenly1314</a>  | <a title="CSDN博客" href="http://blog.csdn.net/jenly121" target="_blank">jenly121</a>  | <a title="博客园" href="https://www.cnblogs.com/jenly" target="_blank">jenly</a>  |
-
-## 联系我
-
-| 微信公众号        | Gmail邮箱                                                                          | QQ邮箱                                                                              | QQ群                                                                                                                       | QQ群                                                                                                                       |
-|:-------------|:---------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|
-| [Jenly666](http://weixin.qq.com/r/wzpWTuPEQL4-ract92-R) | <a title="给我发邮件" href="mailto:jenly1314@gmail.com" target="_blank">jenly1314</a> | <a title="给我发邮件" href="mailto:jenly1314@vip.qq.com" target="_blank">jenly1314</a> | <a title="点击加入QQ群" href="https://qm.qq.com/cgi-bin/qm/qr?k=6_RukjAhwjAdDHEk2G7nph-o8fBFFzZz" target="_blank">20867961</a> | <a title="点击加入QQ群" href="https://qm.qq.com/cgi-bin/qm/qr?k=Z9pobM8bzAW7tM_8xC31W8IcbIl0A-zT" target="_blank">64020761</a> |
-
-<div>
-   <img src="https://jenly1314.github.io/image/page/footer.png">
-</div>
+![footer](https://jenly1314.github.io/page/footer.svg)
